@@ -20,11 +20,50 @@ class CarouselScreen extends StatefulWidget {
 class _CarouselScreenState extends State<CarouselScreen> {
   final List<Widget> imageSliders = imgList
       .map(
-        (item) => Container(
-          margin: EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Image.network(item, fit: BoxFit.cover, width: 1000.0),
+        (item) => GestureDetector(
+          onTap: () {
+            print("teste");
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            margin: EdgeInsets.all(5.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 7, left: 5, right: 5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                        ),
+                        child: Image.network(
+                          item,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(8),
+                    color: Colors.white,
+                    child: Center(
+                      child: Text(
+                        'Título do evento',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       )
@@ -34,12 +73,15 @@ class _CarouselScreenState extends State<CarouselScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Complicated image slider demo')),
-      body: Container(
+      body: SizedBox(
+        width: double.infinity,
+        height: 180,
         child: CarouselSlider(
           options: CarouselOptions(
             autoPlay: true,
             aspectRatio: 2.0,
             enlargeCenterPage: true,
+            viewportFraction: 0.6,
           ),
           items: imageSliders,
         ),
